@@ -25,7 +25,8 @@ dependencies {
   compileOnly group: 'org.bukkit', name: 'bukkit', version: '1.8-R0.1-SNAPSHOT'
   testCompile group: 'org.bukkit', name: 'bukkit', version: '1.8-R0.1-SNAPSHOT'
 
-  compile group: 'org.natrolite', name: 'vault-api', version: '1.6.1.1'
+  //compile group: 'org.natrolite', name: 'vault-api', version: '1.6.1.1'
+  compile files('libs/vault-api-1.6.1.1.jar')
   compile group: 'org.bstats', name: 'bstats-bukkit', version: '1.1'
 
   // Libraries
@@ -106,3 +107,16 @@ task wrapper(type: Wrapper) {
 }
 
 apply from: 'gradle/deploy.gradle'
+
+task copyTaskDev(type: Copy) {
+  from 'build/libs/vault-1.6.1-shaded.jar'
+  into 'D:\\Saved Games\\Minecraft Servers\\(Spigot) Blue\'s DevHouse\\plugins'
+}
+
+task copyTaskSlim(type: Copy) {
+  from 'build/libs/vault-1.6.1-shaded.jar'
+  into 'D:\\Saved Games\\Minecraft Servers\\(Spigot) Blue\'s SlimHouse\\plugins'
+}
+
+build.finalizedBy(copyTaskDev)
+build.finalizedBy(copyTaskSlim)
