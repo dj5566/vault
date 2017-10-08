@@ -98,21 +98,12 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.currencyNameSingular();
     }
 
-    /**
-     * @param s
-     * @deprecated
-     */
     @Override
     public boolean hasAccount(String s)
     {
         return api.hasAccount(s);
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public boolean hasAccount(String s,
                               String s1)
@@ -120,21 +111,12 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.hasAccount(s, s1);
     }
 
-    /**
-     * @param s
-     * @deprecated
-     */
     @Override
     public double getBalance(String s)
     {
         return api.getBalance(s);
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public double getBalance(String s,
                              String s1)
@@ -142,11 +124,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.getBalance(s, s1);
     }
 
-    /**
-     * @param s
-     * @param v
-     * @deprecated
-     */
     @Override
     public boolean has(String s,
                        double v)
@@ -154,12 +131,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.has(s, v);
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @param v
-     * @deprecated
-     */
     @Override
     public boolean has(String s,
                        String s1,
@@ -168,11 +139,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.has(s, s1, v);
     }
 
-    /**
-     * @param s
-     * @param v
-     * @deprecated
-     */
     @Override
     public EconomyResponse withdrawPlayer(String s,
                                           double v)
@@ -180,12 +146,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.withdrawPlayer(s, v));
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @param v
-     * @deprecated
-     */
     @Override
     public EconomyResponse withdrawPlayer(String s,
                                           String s1,
@@ -194,11 +154,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.withdrawPlayer(s, s1, v));
     }
 
-    /**
-     * @param s
-     * @param v
-     * @deprecated
-     */
     @Override
     public EconomyResponse depositPlayer(String s,
                                          double v)
@@ -206,12 +161,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.depositPlayer(s, v));
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @param v
-     * @deprecated
-     */
     @Override
     public EconomyResponse depositPlayer(String s,
                                          String s1,
@@ -220,11 +169,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.depositPlayer(s, s1, v));
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public EconomyResponse createBank(String s,
                                       String s1)
@@ -265,11 +209,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.bankDeposit(s, v));
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public EconomyResponse isBankOwner(String s,
                                        String s1)
@@ -277,11 +216,6 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return convertBetweenResponses(api.isBankOwner(s, s1));
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public EconomyResponse isBankMember(String s,
                                         String s1)
@@ -295,21 +229,12 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         return api.getBanks();
     }
 
-    /**
-     * @param s
-     * @deprecated
-     */
     @Override
     public boolean createPlayerAccount(String s)
     {
         return api.createPlayerAccount(s);
     }
 
-    /**
-     * @param s
-     * @param s1
-     * @deprecated
-     */
     @Override
     public boolean createPlayerAccount(String s,
                                        String s1)
@@ -319,8 +244,8 @@ public class Economy_BluesDoubloons extends AbstractEconomy
 
     /**
      * Converts between the economy response received by blue's api and the economy response used by vault
-     * BluesEconomyResponse is meant to be identical so this exists because we can't cast it
-     * @param response The instance of blue's economy response we want to change into a usuable economy response
+     * BluesEconomyResponse is meant to be nearly identical so this exists because we can't cast it directly
+     * @param response The instance of blue's economy response we want to change into a usable economy response
      * @return The economy response usable in vault
      */
     private EconomyResponse convertBetweenResponses(BluesEconomyResponse response) {
