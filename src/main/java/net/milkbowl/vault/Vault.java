@@ -25,6 +25,8 @@ import static org.bukkit.ChatColor.YELLOW;
 import com.nijikokun.register.payment.Methods;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -49,26 +51,7 @@ import net.milkbowl.vault.chat.plugins.Chat_mChat;
 import net.milkbowl.vault.chat.plugins.Chat_mChatSuite;
 import net.milkbowl.vault.chat.plugins.Chat_rscPermissions;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.plugins.Economy_BOSE7;
-import net.milkbowl.vault.economy.plugins.Economy_CommandsEX;
-import net.milkbowl.vault.economy.plugins.Economy_Craftconomy3;
-import net.milkbowl.vault.economy.plugins.Economy_CurrencyCore;
-import net.milkbowl.vault.economy.plugins.Economy_DigiCoin;
-import net.milkbowl.vault.economy.plugins.Economy_Dosh;
-import net.milkbowl.vault.economy.plugins.Economy_EconXP;
-import net.milkbowl.vault.economy.plugins.Economy_Essentials;
-import net.milkbowl.vault.economy.plugins.Economy_GoldIsMoney2;
-import net.milkbowl.vault.economy.plugins.Economy_GoldenChestEconomy;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
-import net.milkbowl.vault.economy.plugins.Economy_McMoney;
-import net.milkbowl.vault.economy.plugins.Economy_MiConomy;
-import net.milkbowl.vault.economy.plugins.Economy_MineConomy;
-import net.milkbowl.vault.economy.plugins.Economy_MultiCurrency;
-import net.milkbowl.vault.economy.plugins.Economy_SDFEconomy;
-import net.milkbowl.vault.economy.plugins.Economy_TAEcon;
-import net.milkbowl.vault.economy.plugins.Economy_XPBank;
-import net.milkbowl.vault.economy.plugins.Economy_eWallet;
-import net.milkbowl.vault.economy.plugins.Economy_iConomy6;
+import net.milkbowl.vault.economy.plugins.*;
 import net.milkbowl.vault.permission.Permission;
 import net.milkbowl.vault.permission.plugins.Permission_DroxPerms;
 import net.milkbowl.vault.permission.plugins.Permission_GroupManager;
@@ -297,6 +280,7 @@ public class Vault extends JavaPlugin {
     hookEconomy("XPBank", Economy_XPBank.class, ServicePriority.Normal, "com.gmail.mirelatrue.xpbank.XPBank");
     hookEconomy("TAEcon", Economy_TAEcon.class, ServicePriority.Normal, "net.teamalpha.taecon.TAEcon");
     hookEconomy("DigiCoin", Economy_DigiCoin.class, ServicePriority.Normal, "co.uk.silvania.cities.digicoin.DigiCoin");
+    hookEconomy("BluesDoubloons", Economy_BluesDoubloons.class, ServicePriority.Normal, "com.gmail.bluestreehouse.bluesdoubloons.BluesDoubloons");
   }
 
   private void loadPermission() {
@@ -343,6 +327,13 @@ public class Vault extends JavaPlugin {
       }
     } catch (Throwable throwable) {
       getLogger().severe(String.format(HOOK_FAILED, "Economy", name));
+
+      StringWriter writer = new StringWriter();
+      PrintWriter printWriter = new PrintWriter( writer );
+      throwable.printStackTrace( printWriter );
+      printWriter.flush();
+      getLogger().severe(writer.toString());
+
     }
   }
 
