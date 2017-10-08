@@ -44,12 +44,15 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     private Plugin plugin;
     private Api api;
 
-    public Economy_BluesDoubloons(Plugin plugin) {
+    public Economy_BluesDoubloons(Plugin plugin)
+    {
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new Economy_BluesDoubloons.EconomyServerListener(this), plugin);
-        if (api == null) {
-            Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin("BluesDoubloons");
-            if (bluesDoubloons != null && bluesDoubloons.isEnabled()) {
+        if (api == null)
+        {
+            Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin(name);
+            if (bluesDoubloons != null && bluesDoubloons.isEnabled())
+            {
                 api = ((BluesDoubloons) bluesDoubloons).getApi();
                 log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), name));
             }
@@ -59,13 +62,14 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     @Override
     public boolean isEnabled()
     {
-        return api.isEnabled();
+        Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin(name);
+        return api != null && bluesDoubloons.isEnabled();
     }
 
     @Override
     public String getName()
     {
-        return api.getName();
+        return name;
     }
 
     @Override
@@ -245,10 +249,12 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     /**
      * Converts between the economy response received by blue's api and the economy response used by vault
      * BluesEconomyResponse is meant to be nearly identical so this exists because we can't cast it directly
+     *
      * @param response The instance of blue's economy response we want to change into a usable economy response
      * @return The economy response usable in vault
      */
-    private EconomyResponse convertBetweenResponses(BluesEconomyResponse response) {
+    private EconomyResponse convertBetweenResponses(BluesEconomyResponse response)
+    {
         return new EconomyResponse(response.amount, response.balance, EconomyResponse.ResponseType.values()[response.type.ordinal()], response.errorMessage);
     }
 
@@ -259,16 +265,20 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     {
         Economy_BluesDoubloons economy = null;
 
-        public EconomyServerListener(Economy_BluesDoubloons economy_BluesDoubloons) {
+        public EconomyServerListener(Economy_BluesDoubloons economy_BluesDoubloons)
+        {
             this.economy = economy_BluesDoubloons;
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
-        public void onPluginEnable(PluginEnableEvent event) {
-            if (economy.api == null) {
+        public void onPluginEnable(PluginEnableEvent event)
+        {
+            if (economy.api == null)
+            {
                 Plugin bluesDoubloons = event.getPlugin();
 
-                if (bluesDoubloons.getDescription().getName().equals("BluesDoubloons")) {
+                if (bluesDoubloons.getDescription().getName().equals(name))
+                {
                     economy.api = ((BluesDoubloons) bluesDoubloons).getApi();
                     log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
                 }
@@ -276,9 +286,12 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
-        public void onPluginDisable(PluginDisableEvent event) {
-            if (economy.api != null) {
-                if (event.getPlugin().getDescription().getName().equals("BluesDoubloons")) {
+        public void onPluginDisable(PluginDisableEvent event)
+        {
+            if (economy.api != null)
+            {
+                if (event.getPlugin().getDescription().getName().equals(name))
+                {
                     economy.api = null;
                     log.info(String.format("[%s][Economy] %s unhooked.", plugin.getDescription().getName(), economy.name));
                 }
