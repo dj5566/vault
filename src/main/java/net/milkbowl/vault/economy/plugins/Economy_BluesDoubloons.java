@@ -21,7 +21,6 @@
 package net.milkbowl.vault.economy.plugins;
 
 import com.gmail.bluestreehouse.bluesdoubloons.Api;
-import com.gmail.bluestreehouse.bluesdoubloons.BluesDoubloons;
 import com.gmail.bluestreehouse.bluesdoubloons.datatypes.BluesEconomyResponse;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -42,20 +41,15 @@ public class Economy_BluesDoubloons extends AbstractEconomy
 
     private final String name = "BluesDoubloons";
     private Plugin plugin;
-    private Api api;
 
     public Economy_BluesDoubloons(Plugin plugin)
     {
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new Economy_BluesDoubloons.EconomyServerListener(this), plugin);
-        if (api == null)
+        Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin(name);
+        if (bluesDoubloons != null && bluesDoubloons.isEnabled())
         {
-            Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin(name);
-            if (bluesDoubloons != null && bluesDoubloons.isEnabled())
-            {
-                api = ((BluesDoubloons) bluesDoubloons).getApi();
-                log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), name));
-            }
+            log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), name));
         }
     }
 
@@ -63,7 +57,7 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     public boolean isEnabled()
     {
         Plugin bluesDoubloons = plugin.getServer().getPluginManager().getPlugin(name);
-        return api != null && bluesDoubloons.isEnabled();
+        return bluesDoubloons.isEnabled();
     }
 
     @Override
@@ -75,64 +69,64 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     @Override
     public boolean hasBankSupport()
     {
-        return api.hasBankSupport();
+        return Api.hasBankSupport();
     }
 
     @Override
     public int fractionalDigits()
     {
-        return api.fractionalDigits();
+        return Api.fractionalDigits();
     }
 
     @Override
     public String format(double v)
     {
-        return api.format(v);
+        return Api.format(v);
     }
 
     @Override
     public String currencyNamePlural()
     {
-        return api.currencyNamePlural();
+        return Api.currencyNamePlural();
     }
 
     @Override
     public String currencyNameSingular()
     {
-        return api.currencyNameSingular();
+        return Api.currencyNameSingular();
     }
 
     @Override
     public boolean hasAccount(String s)
     {
-        return api.hasAccount(s);
+        return Api.hasAccount(s);
     }
 
     @Override
     public boolean hasAccount(String s,
                               String s1)
     {
-        return api.hasAccount(s, s1);
+        return Api.hasAccount(s, s1);
     }
 
     @Override
     public double getBalance(String s)
     {
-        return api.getBalance(s);
+        return Api.getBalance(s);
     }
 
     @Override
     public double getBalance(String s,
                              String s1)
     {
-        return api.getBalance(s, s1);
+        return Api.getBalance(s, s1);
     }
 
     @Override
     public boolean has(String s,
                        double v)
     {
-        return api.has(s, v);
+        return Api.has(s, v);
     }
 
     @Override
@@ -140,14 +134,14 @@ public class Economy_BluesDoubloons extends AbstractEconomy
                        String s1,
                        double v)
     {
-        return api.has(s, s1, v);
+        return Api.has(s, s1, v);
     }
 
     @Override
     public EconomyResponse withdrawPlayer(String s,
                                           double v)
     {
-        return convertBetweenResponses(api.withdrawPlayer(s, v));
+        return convertBetweenResponses(Api.withdrawPlayer(s, v));
     }
 
     @Override
@@ -155,14 +149,14 @@ public class Economy_BluesDoubloons extends AbstractEconomy
                                           String s1,
                                           double v)
     {
-        return convertBetweenResponses(api.withdrawPlayer(s, s1, v));
+        return convertBetweenResponses(Api.withdrawPlayer(s, s1, v));
     }
 
     @Override
     public EconomyResponse depositPlayer(String s,
                                          double v)
     {
-        return convertBetweenResponses(api.depositPlayer(s, v));
+        return convertBetweenResponses(Api.depositPlayer(s, v));
     }
 
     @Override
@@ -170,84 +164,84 @@ public class Economy_BluesDoubloons extends AbstractEconomy
                                          String s1,
                                          double v)
     {
-        return convertBetweenResponses(api.depositPlayer(s, s1, v));
+        return convertBetweenResponses(Api.depositPlayer(s, s1, v));
     }
 
     @Override
     public EconomyResponse createBank(String s,
                                       String s1)
     {
-        return convertBetweenResponses(api.createBank(s, s1));
+        return convertBetweenResponses(Api.createBank(s, s1));
     }
 
     @Override
     public EconomyResponse deleteBank(String s)
     {
-        return convertBetweenResponses(api.deleteBank(s));
+        return convertBetweenResponses(Api.deleteBank(s));
     }
 
     @Override
     public EconomyResponse bankBalance(String s)
     {
-        return convertBetweenResponses(api.bankBalance(s));
+        return convertBetweenResponses(Api.bankBalance(s));
     }
 
     @Override
     public EconomyResponse bankHas(String s,
                                    double v)
     {
-        return convertBetweenResponses(api.bankHas(s, v));
+        return convertBetweenResponses(Api.bankHas(s, v));
     }
 
     @Override
     public EconomyResponse bankWithdraw(String s,
                                         double v)
     {
-        return convertBetweenResponses(api.bankWithdraw(s, v));
+        return convertBetweenResponses(Api.bankWithdraw(s, v));
     }
 
     @Override
     public EconomyResponse bankDeposit(String s,
                                        double v)
     {
-        return convertBetweenResponses(api.bankDeposit(s, v));
+        return convertBetweenResponses(Api.bankDeposit(s, v));
     }
 
     @Override
     public EconomyResponse isBankOwner(String s,
                                        String s1)
     {
-        return convertBetweenResponses(api.isBankOwner(s, s1));
+        return convertBetweenResponses(Api.isBankOwner(s, s1));
     }
 
     @Override
     public EconomyResponse isBankMember(String s,
                                         String s1)
     {
-        return convertBetweenResponses(api.isBankMember(s, s1));
+        return convertBetweenResponses(Api.isBankMember(s, s1));
     }
 
     @Override
     public List<String> getBanks()
     {
-        return api.getBanks();
+        return Api.getBanks();
     }
 
     @Override
     public boolean createPlayerAccount(String s)
     {
-        return api.createPlayerAccount(s);
+        return Api.createPlayerAccount(s);
     }
 
     @Override
     public boolean createPlayerAccount(String s,
                                        String s1)
     {
-        return api.createPlayerAccount(s, s1);
+        return Api.createPlayerAccount(s, s1);
     }
 
     /**
-     * Converts between the economy response received by blue's api and the economy response used by vault
+     * Converts between the economy response received by blue's Api and the economy response used by vault
      * BluesEconomyResponse is meant to be nearly identical so this exists because we can't cast it directly
      *
      * @param response The instance of blue's economy response we want to change into a usable economy response
@@ -259,7 +253,7 @@ public class Economy_BluesDoubloons extends AbstractEconomy
     }
 
     /**
-     * Handles some basic setup and teardown of this part of the economy api
+     * Handles some basic setup and teardown of this part of the economy Api
      */
     public class EconomyServerListener implements Listener
     {
@@ -273,28 +267,20 @@ public class Economy_BluesDoubloons extends AbstractEconomy
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event)
         {
-            if (economy.api == null)
-            {
-                Plugin bluesDoubloons = event.getPlugin();
+            Plugin bluesDoubloons = event.getPlugin();
 
-                if (bluesDoubloons.getDescription().getName().equals(name))
-                {
-                    economy.api = ((BluesDoubloons) bluesDoubloons).getApi();
-                    log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
-                }
+            if (bluesDoubloons.getDescription().getName().equals(name))
+            {
+                log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event)
         {
-            if (economy.api != null)
+            if (event.getPlugin().getDescription().getName().equals(name))
             {
-                if (event.getPlugin().getDescription().getName().equals(name))
-                {
-                    economy.api = null;
-                    log.info(String.format("[%s][Economy] %s unhooked.", plugin.getDescription().getName(), economy.name));
-                }
+                log.info(String.format("[%s][Economy] %s unhooked.", plugin.getDescription().getName(), economy.name));
             }
         }
     }
